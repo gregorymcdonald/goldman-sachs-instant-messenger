@@ -1,7 +1,9 @@
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class Channel implements IChannel {
+    private String identifier;
     private ArrayList<Message> messages;
 
     /**
@@ -9,7 +11,12 @@ public class Channel implements IChannel {
      * Initializes an empty channel with no messages.
      */
     public Channel() {
-        this.messages = new ArrayList<Message>();
+        identifier = UUID.randomUUID().toString();
+        messages = new ArrayList<Message>();
+    }
+
+    public String GetIdentifier() {
+        return identifier;
     }
 
     public List<Message> GetMessages() {
