@@ -1,8 +1,6 @@
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
-import java.lang.IllegalArgumentException;
-import java.lang.UnsupportedOperationException;
 
 /**
  * Class for an in-memory channel repository, i.e. not persistent.
