@@ -1,4 +1,4 @@
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Interface describing a repository for channels.
@@ -15,7 +15,7 @@ interface IChannelRepository {
     /**
      * @return a List of all channels that a user is a member of.
      */
-    public List<Channel> GetChannelsByUser(String user);
+    public Collection<Channel> GetChannelsByUser(String user);
 
     /**
      * Save a new or existing channel.

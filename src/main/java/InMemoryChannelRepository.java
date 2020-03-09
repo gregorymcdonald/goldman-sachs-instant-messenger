@@ -1,4 +1,5 @@
-import java.util.List;
+import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -20,8 +21,14 @@ public class InMemoryChannelRepository implements IChannelRepository {
         return identifierToChannelMap.containsKey(identifier) ? identifierToChannelMap.get(identifier) : null;
     }
 
-    public List<Channel> GetChannelsByUser(String user) {
-        throw new UnsupportedOperationException();
+    public Collection<Channel> GetChannelsByUser(String user) {
+        ArrayList<Channel> channels = new ArrayList<Channel>();
+        for (Channel channel : identifierToChannelMap.values()) {
+            if (channel.GetMembers().contains(user)) {
+                channels.add(channel);
+            }
+        }
+        return channels;
     }
 
     public void SaveChannel(Channel channel) {
