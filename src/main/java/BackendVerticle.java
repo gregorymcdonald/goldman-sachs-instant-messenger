@@ -1,10 +1,12 @@
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Iterator;
 
 import io.vertx.core.Future;
-import io.vertx.core.json.Json;
+import io.vertx.core.json.*;
 import io.vertx.core.Vertx;
 import io.vertx.core.AbstractVerticle;
+import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.Route;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
@@ -19,15 +21,18 @@ public class BackendVerticle extends AbstractVerticle {
 		Channel defaultChannel = new Channel();
 		defaultChannel.AddMember("test");
 		defaultChannel.SendMessage(new Message("test", "Hello World!"));
-		channelRepository.SaveChannel(defaultChannel);
+		channelRepository.saveChannel(defaultChannel);
 
 		Router router = Router.router(vertx);
 		// Route example: /api/channels?member=test
 	    Route channelsRoute = router.get("/api/channels");
 	    channelsRoute.handler(this::getChannelsByParam);
-	    // Route example: /api/channels/
+	    // Route example: /api/channels/1883779d-3d29-4528-a2c9-5188f1408cb3
 	    Route channelsIdentifierRoute = router.get("/api/channels/:identifier");
 	    channelsIdentifierRoute.handler(this::getChannelsByIdentifier);
+	    //
+	    router.route("/api/channels*").handler(BodyHandler.create());
+		router.post("/api/channels").handler(this::addChannel);
 
 	    vertx
 	    	.createHttpServer()
@@ -49,5 +54,24 @@ public class BackendVerticle extends AbstractVerticle {
 		routingContext.response()
       		.putHeader("content-type", "application/json; charset=utf-8")
       		.end(Json.encodePrettily(channel));
+	}
+
+	private void addChannel(RoutingContext routingContext) {
+		try {
+		JsonObject requestBody = (JsonObject) Json.decodeValue(routingContext.getBodyAsString());
+		JsonArray membersArray = requestBody.getJsonArray("members");
+		Channel newChannel = new Channel();
+		Iterator membersArrayIterator = membersArray.iterator();
+		while (membersArrayIterator.hasNext()) {
+			newChannel.AddMember(membersArrayIterator.next().toString());
+		}
+		channelRepository.saveChannel(newChannel);
+		routingContext.response()
+		    .setStatusCode(201)
+		    .putHeader("content-type", "application/json; charset=utf-8")
+		    .end(Json.encodePrettily(newChannel));
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 	}
 }

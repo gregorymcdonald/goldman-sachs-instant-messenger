@@ -4,10 +4,10 @@ import org.junit.Test;
 
 public class ChannelRepositoryTest {
     @Test
-    public void SaveChannel_Null_ThrowsException() {
+    public void saveChannel_Null_ThrowsException() {
         IChannelRepository channelRepository = new InMemoryChannelRepository();
         Assert.assertThrows(IllegalArgumentException.class, () -> {
-            channelRepository.SaveChannel(null);
+            channelRepository.saveChannel(null);
         });
     }
 
@@ -26,10 +26,10 @@ public class ChannelRepositoryTest {
     }
 
     @Test
-    public void SaveChannel_getChannelByIdentifier_ReturnsSavedChannel() {
+    public void saveChannel_getChannelByIdentifier_ReturnsSavedChannel() {
         IChannelRepository channelRepository = new InMemoryChannelRepository();
         Channel channel = new Channel();
-        channelRepository.SaveChannel(channel);
+        channelRepository.saveChannel(channel);
         Assert.assertSame(channel, channelRepository.getChannelByIdentifier(channel.getIdentifier()));
     }
 
@@ -47,7 +47,7 @@ public class ChannelRepositoryTest {
         channel.AddMember("test");
 
         IChannelRepository channelRepository = new InMemoryChannelRepository();
-        channelRepository.SaveChannel(channel);
+        channelRepository.saveChannel(channel);
 
         Collection<Channel> channels = channelRepository.getChannelsByMember("test");
         Assert.assertEquals(1, channels.size());

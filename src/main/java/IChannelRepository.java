@@ -22,7 +22,7 @@ interface IChannelRepository {
      *
      * @param channel - the channel to save.
      */
-    public void SaveChannel(Channel channel);
+    public void saveChannel(Channel channel);
 
     /**
      * Delete an existing channel.

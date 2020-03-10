@@ -31,7 +31,7 @@ public class InMemoryChannelRepository implements IChannelRepository {
         return channels;
     }
 
-    public void SaveChannel(Channel channel) {
+    public void saveChannel(Channel channel) {
         if (channel == null) {
             throw new IllegalArgumentException("channel can not be null");
         }
