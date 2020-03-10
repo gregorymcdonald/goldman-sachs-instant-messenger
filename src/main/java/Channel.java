@@ -12,7 +12,7 @@ import java.util.UUID;
  * @since Mar 10, 2020
  */
 public class Channel {
-    private String identifier;
+    private final String identifier;
     private Set<String> members;
     private List<Message> messages;
 
@@ -29,7 +29,7 @@ public class Channel {
     /**
      * @return a string uniquely identifying the channel. This identifier will not change over the lifetime of the channel.
      */
-    public String GetIdentifier() {
+    public String getIdentifier() {
         return identifier;
     }
 

@@ -12,25 +12,25 @@ public class ChannelRepositoryTest {
     }
 
     @Test
-    public void GetChannelByIdentifier_Null_ReturnsNull() {
+    public void getChannelByIdentifier_Null_ReturnsNull() {
         IChannelRepository channelRepository = new InMemoryChannelRepository();
-        Channel channel = channelRepository.GetChannelByIdentifier(null);
+        Channel channel = channelRepository.getChannelByIdentifier(null);
         Assert.assertNull(channel);
     }
 
     @Test
-    public void GetChannelByIdentifier_BogusIdentifier_ReturnsNull() {
+    public void getChannelByIdentifier_BogusIdentifier_ReturnsNull() {
         IChannelRepository channelRepository = new InMemoryChannelRepository();
-        Channel channel = channelRepository.GetChannelByIdentifier("BOGUS");
+        Channel channel = channelRepository.getChannelByIdentifier("BOGUS");
         Assert.assertNull(channel);
     }
 
     @Test
-    public void SaveChannel_GetChannelByIdentifier_ReturnsSavedChannel() {
+    public void SaveChannel_getChannelByIdentifier_ReturnsSavedChannel() {
         IChannelRepository channelRepository = new InMemoryChannelRepository();
         Channel channel = new Channel();
         channelRepository.SaveChannel(channel);
-        Assert.assertSame(channel, channelRepository.GetChannelByIdentifier(channel.GetIdentifier()));
+        Assert.assertSame(channel, channelRepository.getChannelByIdentifier(channel.getIdentifier()));
     }
 
     @Test

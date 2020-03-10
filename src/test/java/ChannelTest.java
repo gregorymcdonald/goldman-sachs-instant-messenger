@@ -18,7 +18,7 @@ public class ChannelTest {
     public void DifferentInstances_HaveDifferentIdentifiers() {
         Channel channel1 = new Channel();
         Channel channel2 = new Channel();
-        Assert.assertNotEquals(channel1.GetIdentifier(), channel2.GetIdentifier());
+        Assert.assertNotEquals(channel1.getIdentifier(), channel2.getIdentifier());
     }
 
     @Test

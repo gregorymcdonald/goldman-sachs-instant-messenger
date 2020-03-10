@@ -17,7 +17,7 @@ public class InMemoryChannelRepository implements IChannelRepository {
         identifierToChannelMap = new HashMap<String, Channel>();
     }
 
-    public Channel GetChannelByIdentifier(String identifier) {
+    public Channel getChannelByIdentifier(String identifier) {
         return identifierToChannelMap.containsKey(identifier) ? identifierToChannelMap.get(identifier) : null;
     }
 
@@ -35,7 +35,7 @@ public class InMemoryChannelRepository implements IChannelRepository {
         if (channel == null) {
             throw new IllegalArgumentException("channel can not be null");
         }
-        identifierToChannelMap.put(channel.GetIdentifier(), channel);
+        identifierToChannelMap.put(channel.getIdentifier(), channel);
     }
 
     public void DeleteChannel(String identifier) {

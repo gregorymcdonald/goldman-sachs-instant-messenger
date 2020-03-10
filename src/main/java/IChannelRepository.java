@@ -10,7 +10,7 @@ interface IChannelRepository {
     /**
      * @return a Channel with the specified identifier. null if not found.
      */
-    public Channel GetChannelByIdentifier(String identifier);
+    public Channel getChannelByIdentifier(String identifier);
 
     /**
      * @return a List of all channels that the specified member is a member of.

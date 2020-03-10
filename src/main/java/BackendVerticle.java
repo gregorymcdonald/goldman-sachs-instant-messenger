@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.Collection;
 
 import io.vertx.core.Future;
 import io.vertx.core.json.Json;
@@ -21,8 +22,12 @@ public class BackendVerticle extends AbstractVerticle {
 		channelRepository.SaveChannel(defaultChannel);
 
 		Router router = Router.router(vertx);
+		// Route example: /api/channels?member=test
 	    Route channelsRoute = router.get("/api/channels");
-	    channelsRoute.handler(this::getChannelsByMember);
+	    channelsRoute.handler(this::getChannelsByParam);
+	    // Route example: /api/channels/
+	    Route channelsIdentifierRoute = router.get("/api/channels/:identifier");
+	    channelsIdentifierRoute.handler(this::getChannelsByIdentifier);
 
 	    vertx
 	    	.createHttpServer()
@@ -30,15 +35,19 @@ public class BackendVerticle extends AbstractVerticle {
 	      	.listen(8080);
 	}
 
-	private void getChannelsByMember(RoutingContext routingContext) {
-		try {
-			String member = routingContext.request().getParam("member");
-			routingContext.response()
-	      		.putHeader("content-type", "application/json; charset=utf-8")
-	      		.end(Json.encodePrettily(channelRepository.getChannelsByMember(member)));
-	      	}
-	    catch (Exception e) {
-	    	System.out.println(e);
-	    }
+	private void getChannelsByParam(RoutingContext routingContext) {
+		String member = routingContext.request().getParam("member");
+		Collection<Channel> channel = channelRepository.getChannelsByMember(member);
+		routingContext.response()
+      		.putHeader("content-type", "application/json; charset=utf-8")
+      		.end(Json.encodePrettily(channel));
+	}
+
+	private void getChannelsByIdentifier(RoutingContext routingContext) {
+		String identifier = routingContext.request().getParam("identifier");
+		Channel channel = channelRepository.getChannelByIdentifier(identifier);
+		routingContext.response()
+      		.putHeader("content-type", "application/json; charset=utf-8")
+      		.end(Json.encodePrettily(channel));
 	}
 }
