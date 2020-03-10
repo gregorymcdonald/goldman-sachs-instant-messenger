@@ -13,9 +13,9 @@ interface IChannelRepository {
     public Channel GetChannelByIdentifier(String identifier);
 
     /**
-     * @return a List of all channels that a user is a member of.
+     * @return a List of all channels that the specified member is a member of.
      */
-    public Collection<Channel> GetChannelsByUser(String user);
+    public Collection<Channel> getChannelsByMember(String member);
 
     /**
      * Save a new or existing channel.

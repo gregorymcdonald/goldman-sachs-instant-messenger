@@ -1,6 +1,6 @@
 public class Message {
-	public String creator;
-    public String content;
+	private String creator;
+    private String content;
 
 	/**
 	 * Default Message constructor.
@@ -18,5 +18,13 @@ public class Message {
 	 */
     public Message(Message message) {
     	this(message.creator, message.content);
+    }
+
+    public String getCreator() {
+    	return creator;
+    }
+
+    public String getContent() {
+    	return content;
     }
 }

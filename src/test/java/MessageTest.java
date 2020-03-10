@@ -7,8 +7,8 @@ public class MessageTest {
         String user = "user";
         String content = "content";
         Message message = new Message(user, content);
-        Assert.assertEquals(user, message.creator);
-        Assert.assertEquals(content, message.content);
+        Assert.assertEquals(user, message.getCreator());
+        Assert.assertEquals(content, message.getContent());
     }
 
     @Test
@@ -16,7 +16,7 @@ public class MessageTest {
         Message original = new Message("user", "content");
         Message copy = new Message(original);
         Assert.assertNotSame(original, copy);
-        Assert.assertEquals(original.creator, copy.creator);
-        Assert.assertEquals(original.content, copy.content);
+        Assert.assertEquals(original.getCreator(), copy.getCreator());
+        Assert.assertEquals(original.getContent(), copy.getContent());
     }
 }

@@ -36,7 +36,7 @@ public class ChannelRepositoryTest {
     @Test
     public void GetChannelByUser_BogusUser_ReturnsEmpty() {
         IChannelRepository channelRepository = new InMemoryChannelRepository();
-        Collection<Channel> channels = channelRepository.GetChannelsByUser("BOGUS");
+        Collection<Channel> channels = channelRepository.getChannelsByMember("BOGUS");
         Assert.assertEquals(0, channels.size());
     }
 
@@ -49,7 +49,7 @@ public class ChannelRepositoryTest {
         IChannelRepository channelRepository = new InMemoryChannelRepository();
         channelRepository.SaveChannel(channel);
 
-        Collection<Channel> channels = channelRepository.GetChannelsByUser("test");
+        Collection<Channel> channels = channelRepository.getChannelsByMember("test");
         Assert.assertEquals(1, channels.size());
     }
 }

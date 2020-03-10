@@ -6,7 +6,7 @@ import java.util.Set;
 import java.util.UUID;
 
 /**
- * Interface describing a conversation between one or more participants, i.e. a channel.
+ * Interface describing a conversation between one or more members, i.e. a channel.
  *
  * @author Gregory McDonald
  * @since Mar 10, 2020
@@ -36,7 +36,7 @@ public class Channel {
     /**
      * @return a List of all user(s) that are members of the channel.
      */
-    public Collection<String> GetMembers() {
+    public Collection<String> getMembers() {
         return new HashSet(members);
     }
 
@@ -64,7 +64,7 @@ public class Channel {
     /**
      * @return a List of all message(s) sent to the channel in the order they were sent.
      */
-    public List<Message> GetMessages() {
+    public List<Message> getMessages() {
         // Deepcopy the internal messages array to prevent mangling.
         ArrayList<Message> clone = new ArrayList<Message>(messages.size());
         for(Message m : this.messages) {

@@ -21,10 +21,10 @@ public class InMemoryChannelRepository implements IChannelRepository {
         return identifierToChannelMap.containsKey(identifier) ? identifierToChannelMap.get(identifier) : null;
     }
 
-    public Collection<Channel> GetChannelsByUser(String user) {
+    public Collection<Channel> getChannelsByMember(String user) {
         ArrayList<Channel> channels = new ArrayList<Channel>();
         for (Channel channel : identifierToChannelMap.values()) {
-            if (channel.GetMembers().contains(user)) {
+            if (channel.getMembers().contains(user)) {
                 channels.add(channel);
             }
         }

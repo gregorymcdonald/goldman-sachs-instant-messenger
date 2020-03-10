@@ -5,13 +5,13 @@ public class ChannelTest {
     @Test
     public void NoArgumentConstructor_HasNoMembers() {
         Channel channel = new Channel();
-        Assert.assertEquals(0, channel.GetMembers().size());
+        Assert.assertEquals(0, channel.getMembers().size());
     }
 
     @Test
     public void NoArgumentConstructor_HasNoMessages() {
         Channel channel = new Channel();
-        Assert.assertEquals(0, channel.GetMessages().size());
+        Assert.assertEquals(0, channel.getMessages().size());
     }
 
     @Test
@@ -41,7 +41,7 @@ public class ChannelTest {
     public void AddMember_Valid_IncreasesMemberCountByOne() {
         Channel channel = new Channel();
         channel.AddMember("test");
-        Assert.assertEquals(1, channel.GetMembers().size());
+        Assert.assertEquals(1, channel.getMembers().size());
     }
 
     @Test
@@ -49,6 +49,6 @@ public class ChannelTest {
         Channel channel = new Channel();
         channel.AddMember("test");
         channel.RemoveMember("test");
-        Assert.assertEquals(0, channel.GetMembers().size());
+        Assert.assertEquals(0, channel.getMembers().size());
     }
 }
