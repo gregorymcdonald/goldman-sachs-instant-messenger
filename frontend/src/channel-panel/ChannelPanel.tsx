@@ -13,15 +13,26 @@ interface Channel {
 }
 
 interface Props {
+  user: string;
   channels?: Channel[];
 }
 
 export default class ChannelPanel extends React.Component<Props> {
+  private getChannelName(channel: Channel): string {
+    if (!channel || !channel.messages) {
+      return "?";
+    }
+    const channelMembersExcludingUser = channel.members.filter(m => m !== this.props.user);
+    return channelMembersExcludingUser.length > 0 ? channelMembersExcludingUser.join(', ') : 'You';
+  }
+
   private getSnippet(channel: Channel): string {
     if (!channel || !channel.messages) {
       return "";
     }
-    return channel.messages[0].content;
+    const mostRecentMessage = channel.messages[channel.messages.length - 1];
+    const prefix = this.props.user === mostRecentMessage.creator ? 'You: ' : '';
+    return prefix + mostRecentMessage.content;
   }
 
   render () {
@@ -29,7 +40,7 @@ export default class ChannelPanel extends React.Component<Props> {
         <div className="channel" key={channel.identifier}>
             <div className="avatar"></div>
             <div className="text-content"> 
-              <span>{channel.members.join(', ')}</span>
+              <span>{this.getChannelName(channel)}</span>
               <span className="snippet">{this.getSnippet(channel)}</span>
             </div>
         </div>

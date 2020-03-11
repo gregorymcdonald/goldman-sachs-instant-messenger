@@ -24,7 +24,7 @@ class App extends React.Component {
     render () {
       return (
         <div className="container">
-            <ChannelPanel channels={this.state.channels} />
+            <ChannelPanel user={this.state.username} channels={this.state.channels} />
             <input className="username" type="text" value={this.state.username} onChange={this.handleChange.bind(this)}/>
         </div>
       );
