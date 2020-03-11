@@ -24,20 +24,26 @@ public class BackendVerticle extends AbstractVerticle {
 		channelRepository.saveChannel(defaultChannel);
 
 		// Set up the routes used by our application.
-		Router router = Router.router(vertx);
+		Router router = Router.router(vertx);	
+	    router.route("/api/channels*").handler(BodyHandler.create());
 		// Set up a route to search for channels using query params.
 		// Route example: /api/channels?member=test
 	    Route channelsRoute = router.get("/api/channels");
 	    channelsRoute.handler(this::getChannelsByParam);
 
 	    // Set up a route to retrieve a specific channel by identifier.
-	    // Route example: /api/channels/1883779d-3d29-4528-a2c9-5188f1408cb3
+	    // Route example: /api/channels/0
 	    Route channelsIdentifierRoute = router.get("/api/channels/:identifier");
 	    channelsIdentifierRoute.handler(this::getChannelsByIdentifier);
 
 	    // Set up a route to add new channels.
-	    router.route("/api/channels*").handler(BodyHandler.create());
+	    // Route example: /api/channels (with body)
 		router.post("/api/channels").handler(this::addChannel);
+
+		// Set up a route to send messages.
+	    // Route example: /api/channels/1/messages (with body)
+	    Route sendMessageRoute = router.post("/api/channels/:identifier/messages");
+	    sendMessageRoute.handler(this::addMessage);
 
 	    vertx
 	    	.createHttpServer()
@@ -68,8 +74,7 @@ public class BackendVerticle extends AbstractVerticle {
 	}
 
 	private void addChannel(RoutingContext routingContext) {
-		try {
-		JsonObject requestBody = (JsonObject) Json.decodeValue(routingContext.getBodyAsString());
+		JsonObject requestBody = routingContext.getBodyAsJson();
 		JsonArray membersArray = requestBody.getJsonArray("members");
 		Channel newChannel = new Channel();
 		Iterator membersArrayIterator = membersArray.iterator();
@@ -81,8 +86,26 @@ public class BackendVerticle extends AbstractVerticle {
 		    .setStatusCode(201)
 		    .putHeader("content-type", "application/json; charset=utf-8")
 		    .end(Json.encodePrettily(newChannel));
-		} catch (Exception e) {
-			System.out.println(e);
-		}
+	}
+
+	private void addMessage(RoutingContext routingContext) {
+		// Create a message from the body of the request.
+		JsonObject messageJson = routingContext.getBodyAsJson();
+		String creator = messageJson.getString("creator");
+		String content = messageJson.getString("content");
+		Message message = new Message(creator, content);
+
+		// Get the channel specified in the route.
+		String channelIdentifier = routingContext.request().getParam("identifier");
+		Channel channel = channelRepository.getChannelByIdentifier(channelIdentifier);
+
+		// Send the message, then save the updated channel.
+		channel.SendMessage(message);
+		channelRepository.saveChannel(channel);
+
+		routingContext.response()
+		    .setStatusCode(201)
+		    .putHeader("content-type", "application/json; charset=utf-8")
+		    .end(Json.encodePrettily(message));
 	}
 }
