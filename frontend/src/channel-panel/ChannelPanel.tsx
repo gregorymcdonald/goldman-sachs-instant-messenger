@@ -15,6 +15,7 @@ interface Channel {
 interface Props {
   user: string;
   channels?: Channel[];
+  onChannelClick?: (channel: Channel) => void;
 }
 
 export default class ChannelPanel extends React.Component<Props> {
@@ -37,7 +38,7 @@ export default class ChannelPanel extends React.Component<Props> {
 
   render () {
     const channels = this.props.channels.map((channel, i) => 
-        <div className="channel" key={channel.identifier}>
+        <div className="channel" key={channel.identifier} onClick={() => this.props.onChannelClick ? this.props.onChannelClick(channel) : ''}>
             <div className="avatar"></div>
             <div className="text-content"> 
               <span>{this.getChannelName(channel)}</span>

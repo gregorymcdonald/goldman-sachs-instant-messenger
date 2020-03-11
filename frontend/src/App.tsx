@@ -10,22 +10,15 @@ class App extends React.Component {
     state = {
       username: "Gregory",
       channels: [],
-      selectedChannel: {
-          messages: [
-              {
-                  creator: "Gregory",
-                  content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exe"
-              },
-              {
-                creator: "Hannah",
-                content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exe"
-              }
-          ]
-      }
+      selectedChannel: null
     };
   
     handleChange(event) {
       this.setState({username: event.target.value})
+    }
+
+    onChannelClick(channel): void {
+        this.setState({selectedChannel: channel});
     }
   
     componentDidMount() {
@@ -37,8 +30,11 @@ class App extends React.Component {
     render () {
       return (
         <div className="container">
-            <ChannelPanel user={this.state.username} channels={this.state.channels} />
-            <MessagesPanel user={this.state.username} messages={this.state.selectedChannel.messages}/>
+            <ChannelPanel user={this.state.username} channels={this.state.channels} onChannelClick={this.onChannelClick.bind(this)}/>
+            { this.state.selectedChannel
+                ? <MessagesPanel user={this.state.username} messages={this.state.selectedChannel.messages}/>
+                : null
+            }
             <input className="username" type="text" value={this.state.username} onChange={this.handleChange.bind(this)}/>
         </div>
       );
