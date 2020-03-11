@@ -23,21 +23,32 @@ public class BackendVerticle extends AbstractVerticle {
 		defaultChannel.SendMessage(new Message("test", "Hello World!"));
 		channelRepository.saveChannel(defaultChannel);
 
+		// Set up the routes used by our application.
 		Router router = Router.router(vertx);
+		// Set up a route to search for channels using query params.
 		// Route example: /api/channels?member=test
 	    Route channelsRoute = router.get("/api/channels");
 	    channelsRoute.handler(this::getChannelsByParam);
+
+	    // Set up a route to retrieve a specific channel by identifier.
 	    // Route example: /api/channels/1883779d-3d29-4528-a2c9-5188f1408cb3
 	    Route channelsIdentifierRoute = router.get("/api/channels/:identifier");
 	    channelsIdentifierRoute.handler(this::getChannelsByIdentifier);
-	    //
+
+	    // Set up a route to add new channels.
 	    router.route("/api/channels*").handler(BodyHandler.create());
 		router.post("/api/channels").handler(this::addChannel);
 
 	    vertx
 	    	.createHttpServer()
 	     	.requestHandler(router)
-	      	.listen(8080);
+	      	.listen(8080, result -> {
+          		if (result.succeeded()) {
+            		startFuture.complete();
+          		} else {
+            		startFuture.fail(result.cause());
+          		}
+        	});
 	}
 
 	private void getChannelsByParam(RoutingContext routingContext) {
