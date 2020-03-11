@@ -1,1 +1,7 @@
+# Maven
 target
+
+# node
+node_modules
+.cache
+dist
