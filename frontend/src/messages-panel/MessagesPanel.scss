@@ -1,0 +1,51 @@
+.messages-panel {
+    background-color: rgb(255, 255, 255);
+    flex-grow: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    h1 {
+        border-bottom: 1px solid rgb(218, 220, 224);
+        margin: 0;
+        padding: 24px 32px;
+    }
+
+    .message-scroll {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+
+        .message {
+            background-color: rgb(241, 243, 244);
+            border-radius: 6px;
+            padding: 12px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            margin: 2px 8px;
+            margin-left: 8px;
+            max-width: 488px;
+        }
+
+        .you.message {
+            background-color: rgb(210, 227, 252);
+            margin-left: auto;
+        }
+    }
+
+    .compose-container {
+        display: flex;
+        flex-direction: row;
+
+        padding-top: 8px;
+        padding-bottom: 30px;
+
+        width: calc(100% - 60px);
+        margin: 0 auto;
+
+        .compose-input {
+            flex-grow: 1;
+        }
+    }
+}
