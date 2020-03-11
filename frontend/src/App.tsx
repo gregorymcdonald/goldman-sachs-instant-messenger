@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 
 import ChannelPanel from './channel-panel/ChannelPanel';
 
-import './App.css';
+import './App.scss';
 
 class App extends React.Component {
     state = {

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import './ChannelPanel.css';
+import './ChannelPanel.scss';
 
 interface Channel {
   identifier: string;
@@ -24,7 +24,7 @@ export default class ChannelPanel extends React.Component<Props> {
 
   render () {
     const channels = this.props.channels.map((channel, i) => 
-        <div key={channel.identifier}>
+        <div className="channel" key={channel.identifier}>
             <span>{channel.members.join(', ')}</span>
         </div>
     );
