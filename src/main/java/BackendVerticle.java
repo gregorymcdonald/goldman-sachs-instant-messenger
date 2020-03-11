@@ -20,16 +20,16 @@ public class BackendVerticle extends AbstractVerticle {
     @Override
     public void start(Future<Void> startFuture) {
         // Create some default data.
-        Channel defaultChannel = new Channel();
-        defaultChannel.AddMember("test");
-        defaultChannel.SendMessage(new Message("test", "Hello World!"));
-        channelRepository.saveChannel(defaultChannel);
-        Channel defaultChannel2 = new Channel();
-        defaultChannel.AddMember("tooth");
-        defaultChannel.AddMember("nail");
-        defaultChannel.SendMessage(new Message("tooth", "Wanna fight?"));
-        defaultChannel.SendMessage(new Message("nail", "How?"));
-        channelRepository.saveChannel(defaultChannel);
+        Channel channel1 = new Channel();
+        channel1.AddMember("test");
+        channel1.SendMessage(new Message("test", "Hello World!"));
+        channelRepository.saveChannel(channel1);
+        Channel channel2 = new Channel();
+        channel2.AddMember("test");
+        channel2.AddMember("test2");
+        channel2.SendMessage(new Message("test", "Hey buddy!"));
+        channel2.SendMessage(new Message("test2", "I'm not your buddy, pal."));
+        channelRepository.saveChannel(channel2);
 
         // Set up the routes used by our application.
         Router router = Router.router(vertx);
