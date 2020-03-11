@@ -28,7 +28,7 @@ public class BackendVerticleTest {
     public void GET_channels_NotEmpty(TestContext context) {
         final Async async = context.async();
 
-        vertx.createHttpClient().getNow(8080, "localhost", "/api/channels?member=test",
+        vertx.createHttpClient().getNow(8080, "localhost", "/api/channels?member=Gregory",
             response -> {
                 response.exceptionHandler(e -> {
                     context.fail(e);

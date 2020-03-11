@@ -7,22 +7,8 @@ import './App.scss';
 
 class App extends React.Component {
     state = {
-      username: "",
-      count: 0,
-      channels: [
-          {
-              identifier: "1",
-              members: [
-                  "Counter"
-              ]
-          }
-      ],
-      messages: [
-          {
-              creator: "test",
-              content: ""
-          }
-      ]
+      username: "Gregory",
+      channels: [],
     };
   
     handleChange(event) {
@@ -30,7 +16,7 @@ class App extends React.Component {
     }
   
     componentDidMount() { // (5)
-      fetch("http://localhost:8080/api/channels?member=test")
+      fetch("http://localhost:8080/api/channels?member=Gregory")
         .then(response => response.json())
         .then(json => this.setState({channels: json}));
     }

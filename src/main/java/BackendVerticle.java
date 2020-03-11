@@ -21,14 +21,14 @@ public class BackendVerticle extends AbstractVerticle {
     public void start(Future<Void> startFuture) {
         // Create some default data.
         Channel channel1 = new Channel();
-        channel1.AddMember("test");
-        channel1.SendMessage(new Message("test", "Hello World!"));
+        channel1.AddMember("Gregory");
+        channel1.SendMessage(new Message("Gregory", "Hello World!"));
         channelRepository.saveChannel(channel1);
         Channel channel2 = new Channel();
-        channel2.AddMember("test");
-        channel2.AddMember("test2");
-        channel2.SendMessage(new Message("test", "Hey buddy!"));
-        channel2.SendMessage(new Message("test2", "I'm not your buddy, pal."));
+        channel2.AddMember("Gregory");
+        channel2.AddMember("Hannah");
+        channel2.SendMessage(new Message("Gregory", "Hey buddy!"));
+        channel2.SendMessage(new Message("Hannah", "I'm not your buddy, pal."));
         channelRepository.saveChannel(channel2);
 
         // Set up the routes used by our application.
