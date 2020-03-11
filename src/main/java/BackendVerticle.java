@@ -11,6 +11,8 @@ import io.vertx.ext.web.Route;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.StaticHandler;
+import io.vertx.ext.web.handler.CorsHandler;
+import io.vertx.core.http.HttpMethod;
 
 public class BackendVerticle extends AbstractVerticle {
     private IChannelRepository channelRepository = new InMemoryChannelRepository();
@@ -22,9 +24,26 @@ public class BackendVerticle extends AbstractVerticle {
         defaultChannel.AddMember("test");
         defaultChannel.SendMessage(new Message("test", "Hello World!"));
         channelRepository.saveChannel(defaultChannel);
+        Channel defaultChannel2 = new Channel();
+        defaultChannel.AddMember("tooth");
+        defaultChannel.AddMember("nail");
+        defaultChannel.SendMessage(new Message("tooth", "Wanna fight?"));
+        defaultChannel.SendMessage(new Message("nail", "How?"));
+        channelRepository.saveChannel(defaultChannel);
 
         // Set up the routes used by our application.
         Router router = Router.router(vertx);
+        // Enable CORS for the frontend.
+        router.route().handler(
+            CorsHandler.create("http://localhost:1234")  
+                .allowedMethod(HttpMethod.GET)
+                .allowedMethod(HttpMethod.POST)
+                .allowedMethod(HttpMethod.OPTIONS)
+                .allowCredentials(true)
+                .allowedHeader("Access-Control-Allow-Method")
+                .allowedHeader("Access-Control-Allow-Origin")
+                .allowedHeader("Access-Control-Allow-Credentials")
+                .allowedHeader("Content-Type")); 
         // Configures a custom error handler (default behavior swallows errors).
         router.errorHandler(500, routingContext -> {
             Object failure = routingContext.failure();
@@ -59,7 +78,7 @@ public class BackendVerticle extends AbstractVerticle {
 
         vertx
             .createHttpServer()
-             .requestHandler(router)
+            .requestHandler(router)
               .listen(8080, result -> {
                   if (result.succeeded()) {
                     startFuture.complete();
