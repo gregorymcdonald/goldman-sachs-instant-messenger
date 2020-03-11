@@ -13,6 +13,32 @@
     }
 
     .channel {
+        cursor: pointer;
+        display: flex;
+        flex-direction: row;
         padding: 16px 24px;
+
+        .avatar {
+            height: 40px;
+            width: 40px;
+            background-color: rgb(115, 153, 198);
+            border-radius: 50%;
+        }
+
+        .text-content {
+            display: flex;
+            flex-direction: column;
+            padding: 0 16px;
+
+            .snippet {
+                color: rgb(100, 99, 104);
+                font-size: 14px;
+                margin-top: 2px;
+            }
+        }
+    }
+
+    .channel:hover {
+        background-color: rgb(241, 243, 244);
     }
 }
