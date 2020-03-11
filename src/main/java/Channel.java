@@ -3,7 +3,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Interface describing a conversation between one or more members, i.e. a channel.
@@ -12,6 +12,8 @@ import java.util.UUID;
  * @since Mar 10, 2020
  */
 public class Channel {
+    private static final AtomicInteger COUNTER = new AtomicInteger(1);
+
     private final String identifier;
     private Set<String> members;
     private List<Message> messages;
@@ -21,7 +23,7 @@ public class Channel {
      * Initializes an empty channel with no messages.
      */
     public Channel() {
-        identifier = UUID.randomUUID().toString();
+        identifier = COUNTER.getAndIncrement() + "";
         members = new HashSet<String>();
         messages = new ArrayList<Message>();
     }
