@@ -24,7 +24,18 @@ public class BackendVerticle extends AbstractVerticle {
 		channelRepository.saveChannel(defaultChannel);
 
 		// Set up the routes used by our application.
-		Router router = Router.router(vertx);	
+		Router router = Router.router(vertx);
+		// Configures a custom error handler (default behavior swallows errors).
+		router.errorHandler(500, routingContext -> {
+			Object failure = routingContext.failure();
+			if (failure instanceof Exception) {
+				Exception exception = (Exception) failure;
+				exception.printStackTrace();
+			} else {
+				System.err.println(failure);
+			}
+		});
+		// Configures all channel routes to accept request bodies.
 	    router.route("/api/channels*").handler(BodyHandler.create());
 		// Set up a route to search for channels using query params.
 		// Route example: /api/channels?member=test
@@ -94,6 +105,8 @@ public class BackendVerticle extends AbstractVerticle {
 		String creator = messageJson.getString("creator");
 		String content = messageJson.getString("content");
 		Message message = new Message(creator, content);
+		int a[] = new int[]{1, 2};
+		a[0] = a[10];
 
 		// Get the channel specified in the route.
 		String channelIdentifier = routingContext.request().getParam("identifier");
