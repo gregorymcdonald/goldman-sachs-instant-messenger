@@ -30,6 +30,13 @@
             flex-direction: column;
             padding: 0 16px;
 
+            span {               
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                max-width: 220px;
+            }
+
             .snippet {
                 color: rgb(100, 99, 104);
                 font-size: 14px;

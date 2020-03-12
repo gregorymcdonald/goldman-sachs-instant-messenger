@@ -27,7 +27,8 @@
             white-space: pre-wrap;
             word-wrap: break-word;
             margin-bottom: 8px;
-            max-width: 488px;
+            width: fit-content;
+            max-width: calc(min(488px, 45%));
         }
 
         .you.message {
