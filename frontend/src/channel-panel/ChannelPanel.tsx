@@ -1,16 +1,6 @@
 import * as React from 'react';
 import './ChannelPanel.scss';
-
-interface Message {
-  creator: string;
-  content: string;
-}
-
-interface Channel {
-  identifier: string;
-  members: string[];
-  messages?: Message[];
-}
+import { Channel } from '../shared/Channel';
 
 interface Props {
   user: string;

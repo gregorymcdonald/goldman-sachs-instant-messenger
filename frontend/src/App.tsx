@@ -5,9 +5,16 @@ import ChannelPanel from './channel-panel/ChannelPanel';
 
 import './App.scss';
 import MessagesPanel from './messages-panel/MessagesPanel';
+import { Channel } from './shared/Channel';
+
+interface State {
+    username: string,
+    channels: Channel[],
+    selectedChannel: Channel
+}
 
 class App extends React.Component {
-    state = {
+    public state: State = {
       username: "Gregory",
       channels: [],
       selectedChannel: null
@@ -17,7 +24,7 @@ class App extends React.Component {
       this.setState({username: event.target.value})
     }
 
-    onChannelClick(channel): void {
+    private onChannelClick(channel): void {
         this.setState({selectedChannel: channel});
     }
   

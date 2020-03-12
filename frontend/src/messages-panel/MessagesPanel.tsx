@@ -1,10 +1,6 @@
 import * as React from 'react';
 import './MessagesPanel.scss';
-
-interface Message {
-  creator: string;
-  content: string;
-}
+import { Message } from '../shared/Message';
 
 interface Props {
   user: string;
