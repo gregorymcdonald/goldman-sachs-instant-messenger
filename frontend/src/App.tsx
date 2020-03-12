@@ -64,12 +64,21 @@ class App extends React.Component {
       const selectedChannel: Channel = this.state.channels.find(v => v.identifier === this.state.selectedChannelIdentifier)
       return (
         <div className="container">
-            <ChannelPanel user={this.state.username} channels={this.state.channels} onChannelClick={this.onChannelClick.bind(this)}/>
+            <div className="left-panel">
+                <div>
+                    <span>User:&nbsp;</span>
+                    <input className="username"
+                           type="text"
+                           value={this.state.username}
+                           onChange={this.onUsernameChange.bind(this)} />
+                </div>
+                <ChannelPanel user={this.state.username} channels={this.state.channels} onChannelClick={this.onChannelClick.bind(this)} />
+            </div>
             { selectedChannel
                 ? <MessagesPanel user={this.state.username} messages={selectedChannel.messages} onSend={this.onSendClick.bind(this)}/>
                 : null
             }
-            <input className="username" type="text" value={this.state.username} onChange={this.onUsernameChange.bind(this)}/>
+            
         </div>
       );
     }

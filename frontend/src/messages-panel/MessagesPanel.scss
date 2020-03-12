@@ -17,14 +17,16 @@
         flex-direction: column;
         justify-content: flex-end;
 
+        width: calc(100% - max(60px, 30%));
+        margin: 0 auto;
+
         .message {
             background-color: rgb(241, 243, 244);
             border-radius: 6px;
             padding: 12px;
             white-space: pre-wrap;
             word-wrap: break-word;
-            margin: 2px 8px;
-            margin-left: 8px;
+            margin-bottom: 8px;
             max-width: 488px;
         }
 
@@ -41,7 +43,7 @@
         padding-top: 8px;
         padding-bottom: 30px;
 
-        width: calc(100% - 60px);
+        width: calc(100% - max(60px, 30%));
         margin: 0 auto;
 
         .compose-input {
