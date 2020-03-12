@@ -19,8 +19,17 @@ class App extends React.Component {
       channels: [],
       selectedChannelIdentifier: null
     };
-  
-    handleChange(event) {
+    
+    /**
+     * Refresh the data displayed in the App.
+     */
+    private refresh(): void {
+        fetch(`http://localhost:8080/api/channels?member=${this.state.username}`)
+            .then(response => response.json())
+            .then(json => this.setState({channels: json}));
+    }
+
+    private onUsernameChange(event: any): void {
       this.setState({username: event.target.value})
     }
 
@@ -29,9 +38,7 @@ class App extends React.Component {
     }
   
     componentDidMount() {
-      fetch("http://localhost:8080/api/channels?member=Gregory")
-        .then(response => response.json())
-        .then(json => this.setState({channels: json}));
+      this.refresh();
     }
   
     render () {
@@ -43,7 +50,7 @@ class App extends React.Component {
                 ? <MessagesPanel user={this.state.username} messages={selectedChannel.messages}/>
                 : null
             }
-            <input className="username" type="text" value={this.state.username} onChange={this.handleChange.bind(this)}/>
+            <input className="username" type="text" value={this.state.username} onChange={this.onUsernameChange.bind(this)}/>
         </div>
       );
     }
