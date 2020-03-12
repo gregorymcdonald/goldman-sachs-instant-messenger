@@ -39,6 +39,10 @@
     }
 
     .channel:hover {
+        background-color: rgb(245, 246, 247);
+    }
+
+    .channel.selected {
         background-color: rgb(241, 243, 244);
     }
 }

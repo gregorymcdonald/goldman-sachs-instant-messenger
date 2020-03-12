@@ -8,7 +8,16 @@ interface Props {
   onChannelClick?: (channel: Channel) => void;
 }
 
-export default class ChannelPanel extends React.Component<Props> {
+interface State {
+  /** The identifier of the channel that is selected. */
+  selected: string;
+}
+
+export default class ChannelPanel extends React.Component<Props, State> {
+  public state: State = {
+    selected: null
+  };
+
   private getChannelName(channel: Channel): string {
     if (!channel || !channel.messages) {
       return "?";
@@ -26,9 +35,25 @@ export default class ChannelPanel extends React.Component<Props> {
     return prefix + mostRecentMessage.content;
   }
 
+  private onChannelClick(channel: Channel): void {
+    this.setState({selected: channel.identifier});
+    if (this.props.onChannelClick) {
+      this.props.onChannelClick(channel);
+    }
+  }
+
+  static getDerivedStateFromProps(nextProps: Props, prevState: State): State {
+    if (nextProps.channels && nextProps.channels.find(c => c.identifier === prevState.selected)) {
+      return prevState;
+    }
+    return {
+      selected: null
+    };
+  }
+
   render () {
-    const channels = this.props.channels.map((channel, i) => 
-        <div className="channel" key={channel.identifier} onClick={() => this.props.onChannelClick ? this.props.onChannelClick(channel) : ''}>
+    const channels = this.props.channels.map((channel) => 
+        <div className={`channel ${this.state.selected === channel.identifier ? "selected" : ""}`} key={channel.identifier} onClick={() => this.onChannelClick(channel)}>
             <div className="avatar"></div>
             <div className="text-content"> 
               <span>{this.getChannelName(channel)}</span>
