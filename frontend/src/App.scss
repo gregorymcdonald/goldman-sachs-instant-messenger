@@ -25,4 +25,13 @@ h1 {
 .left-panel {
     display: flex;
     flex-direction: column;
+
+    .username-entry {
+        padding: 16px 24px;
+    }
+
+    .create-channel {
+        font-size: 14px;
+        padding: 16px 24px;
+    }
 }
