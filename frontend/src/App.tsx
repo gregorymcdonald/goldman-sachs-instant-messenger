@@ -84,16 +84,9 @@ class App extends React.Component {
       return (
         <div className="container">
             <div className="left-panel">
-                <div className="username-entry">
-                    <span>User:&nbsp;</span>
-                    <input className="username"
-                           type="text"
-                           value={this.state.username}
-                           onChange={this.onUsernameChange.bind(this)} />
-                </div>
                 <ChannelPanel user={this.state.username} channels={this.state.channels} onChannelClick={this.onChannelClick.bind(this)} />
-                <div className="create-channel">
-                    <span>Create channel with user</span>
+                <div className="form-entry">
+                    <span>Create new channel with user</span>
                     <br/>
                     <input type="text"
                            value={this.state.createChannelText}
@@ -103,6 +96,14 @@ class App extends React.Component {
                             disabled={!this.state.createChannelText}>
                         +
                     </button>
+                </div>
+                <div className="form-entry">
+                    <span>Current user</span>
+                    <br/>
+                    <input className="username"
+                           type="text"
+                           value={this.state.username}
+                           onChange={this.onUsernameChange.bind(this)} />
                 </div>
             </div>
             { selectedChannel
