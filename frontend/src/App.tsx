@@ -6,6 +6,7 @@ import ChannelPanel from './channel-panel/ChannelPanel';
 import './App.scss';
 import MessagesPanel from './messages-panel/MessagesPanel';
 import { Channel } from './shared/Channel';
+import { Message } from './shared/Message';
 
 interface State {
     username: string,
@@ -36,6 +37,20 @@ class App extends React.Component {
     private onChannelClick(channel: Channel): void {
         this.setState({selectedChannelIdentifier: channel.identifier});
     }
+
+    private onSendClick(message: Message): void {
+        fetch(`http://localhost:8080/api/channels/${this.state.selectedChannelIdentifier}/messages`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                creator: message.creator,
+                content: message.content,
+            })
+        }).then(response => this.refresh());
+    }
   
     componentDidMount() {
       this.refresh();
@@ -47,7 +62,7 @@ class App extends React.Component {
         <div className="container">
             <ChannelPanel user={this.state.username} channels={this.state.channels} onChannelClick={this.onChannelClick.bind(this)}/>
             { selectedChannel
-                ? <MessagesPanel user={this.state.username} messages={selectedChannel.messages}/>
+                ? <MessagesPanel user={this.state.username} messages={selectedChannel.messages} onSend={this.onSendClick.bind(this)}/>
                 : null
             }
             <input className="username" type="text" value={this.state.username} onChange={this.onUsernameChange.bind(this)}/>
