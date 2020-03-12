@@ -30,9 +30,9 @@ export default class ChannelPanel extends React.Component<Props> {
     const channels = this.props.channels.map((channel, i) => 
         <div className="channel" key={channel.identifier} onClick={() => this.props.onChannelClick ? this.props.onChannelClick(channel) : ''}>
             <div className="avatar"></div>
-            <div className="text-content" key={channel.identifier}> 
-              <span key={channel.identifier}>{this.getChannelName(channel)}</span>
-              <span className="snippet" key={channel.identifier}>{this.getSnippet(channel)}</span>
+            <div className="text-content"> 
+              <span>{this.getChannelName(channel)}</span>
+              <span className="snippet">{this.getSnippet(channel)}</span>
             </div>
         </div>
     );
