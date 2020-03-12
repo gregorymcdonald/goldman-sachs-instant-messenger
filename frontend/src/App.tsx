@@ -31,7 +31,11 @@ class App extends React.Component {
     }
 
     private onUsernameChange(event: any): void {
-      this.setState({username: event.target.value})
+      this.setState({
+          username: event.target.value,
+          channels: [],
+          selectedChannelIdentifier: null
+        }, this.refresh);
     }
 
     private onChannelClick(channel: Channel): void {
